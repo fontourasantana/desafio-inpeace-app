@@ -32,7 +32,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '@/plugins/vue-mask', mode: 'client' },
-    { src: '@/plugins/vue-toastification', mode: 'client' }
+    { src: '@/plugins/vue-toastification', mode: 'client' },
+    { src: '@/plugins/vue-filters', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
