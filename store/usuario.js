@@ -1,3 +1,5 @@
+import { v4 } from 'uuid'
+
 export const state = () => ({
   users: []
 })
@@ -15,7 +17,7 @@ export const actions = {
     const users = []
     for (let i = 1; i <= 7; i++) {
       users.push({
-        id: i,
+        id: v4(),
         nome: `Nome Test${'e'.repeat(i)}`,
         cpf: `${i}`.repeat(11),
         dataNascimento: '2021-12-07',
@@ -31,7 +33,7 @@ export const actions = {
   },
   async store ({ state, commit }, payload) {
     await fakeAsync(400, 600)
-    const user = { ...payload, id: state.users.length }
+    const user = { ...payload, id: v4() }
     commit('addUser', user)
     return { message: 'Usuário registrado com sucesso !' }
   },
