@@ -2,26 +2,39 @@
   <v-data-table
     :headers="headers"
     :items="users"
+    :search="search"
     class="elevation-3"
     no-data-text="Nenhum usuário cadastrado no sistema"
+    no-results-text="Nenhum registro correspondente encontrado"
     loading-text="Carregando usuários do sistema"
     :loading="processing"
   >
     <template #top>
-      <v-toolbar
-        flat
-      >
-        <v-toolbar-title>Usuários</v-toolbar-title>
-        <v-divider
-          class="mx-4"
-          inset
-          vertical
-        />
-        <v-spacer />
-        <UserFormModal ref="form" v-model="dialogs.form" />
-        <UserDetailsModal v-model="dialogs.details" :user="selectedUser" />
-        <UserDeleteModal v-model="dialogs.delete" :user="selectedUser" />
-      </v-toolbar>
+      <v-card elevation="0">
+        <v-toolbar
+          flat
+        >
+          <v-toolbar-title>Usuários</v-toolbar-title>
+          <v-divider
+            class="mx-4"
+            inset
+            vertical
+          />
+          <v-spacer />
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Pesquisar"
+            single-line
+            hide-details
+          />
+        </v-toolbar>
+        <v-card-text class="text-right">
+          <UserFormModal ref="form" v-model="dialogs.form" />
+        </v-card-text>
+      </v-card>
+      <UserDetailsModal v-model="dialogs.details" :user="selectedUser" />
+      <UserDeleteModal v-model="dialogs.delete" :user="selectedUser" />
     </template>
     <template #[`item.actions`]="{ item }">
       <v-icon
@@ -67,6 +80,7 @@ export default {
       details: false,
       delete: false
     },
+    search: '',
     headers: [
       {
         text: 'Nome',
