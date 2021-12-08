@@ -33,14 +33,17 @@ export const actions = {
     await fakeAsync(400, 600)
     const user = { ...payload, id: state.users.length }
     commit('addUser', user)
+    return { message: 'Usuário registrado com sucesso !' }
   },
   async update ({ commit }, user) {
     await fakeAsync(400, 600)
     commit('updateUser', user)
+    return { message: 'Usuário atualizado com sucesso !' }
   },
   async destroy ({ commit }, user) {
     await fakeAsync(400, 600)
     commit('removeUser', user)
+    return { message: 'Usuário removido com sucesso !' }
   }
 }
 
