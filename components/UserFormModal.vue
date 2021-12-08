@@ -32,6 +32,7 @@
         <v-btn
           color="success"
           outlined
+          :loading="processing"
           @click="submit"
         >
           Salvar
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { parserUser } from '@/utils'
 import UserForm from '@/components/UserForm'
 
@@ -51,7 +53,8 @@ export default {
     UserForm
   },
   data: () => ({
-    mode: 'creation'
+    mode: 'creation',
+    processing: false
   }),
   computed: {
     title () {
@@ -59,11 +62,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions('usuario', {
+      saveUser: 'store',
+      updateUser: 'update'
+    }),
     submit () {
       this.$refs.form.submit()
     },
-    handler (form) {
-      console.log('submited', form)
+    async handler (form) {
+      try {
+        if (this.processing) {
+          return
+        }
+
+        this.processing = true
+        const { message } = (this.mode === 'creation') ? await this.saveUser(form) : await this.updateUser(form)
+        this.$toast.success(message)
+        this.$emit('input', false)
+      } catch (error) {
+        this.$toast.error(error.message)
+      } finally {
+        this.processing = false
+      }
     },
     modeCreation () {
       this.mode = 'creation'
