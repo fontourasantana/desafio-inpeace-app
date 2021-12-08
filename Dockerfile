@@ -1,4 +1,4 @@
-FROM node:lts as builder
+FROM node:14-alpine as builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN rm -rf node_modules && \
   --silent \
   --only=production
 
-FROM node:lts
+FROM node:14-alpine
 
 WORKDIR /app
 
