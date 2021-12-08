@@ -16,7 +16,7 @@
           vertical
         />
         <v-spacer />
-        <UserFormModal v-model="dialogs.form" />
+        <UserFormModal ref="form" v-model="dialogs.form" />
         <UserDetailsModal v-model="dialogs.details" :user="selectedUser" />
         <UserDeleteModal v-model="dialogs.delete" :user="selectedUser" />
       </v-toolbar>
@@ -80,11 +80,11 @@ export default {
   }),
   created () {
     this.users = []
-    for (let i = 0; i < 5; i++) {
+    for (let i = 1; i <= 5; i++) {
       this.users.push({
         id: i,
-        nome: `Nome Teste ${i}`,
-        cpf: '000.000.000-00',
+        nome: `Nome Test${'e'.repeat(i)}`,
+        cpf: `${i}`.repeat(11),
         dataNascimento: '2021-12-07',
         email: 'email@teste.br',
         telefone: '2712345678',
@@ -103,6 +103,8 @@ export default {
     editUser (item) {
       this.selectedIndex = this.users.indexOf(item)
       this.selectedUser = Object.assign({}, item)
+      this.$refs.form.modeEdition()
+      this.$refs.form.fillForm(this.selectedUser)
       this.dialogs.form = true
     },
     deleteUser (item) {
@@ -111,5 +113,10 @@ export default {
       this.dialogs.delete = true
     }
   }
+  /**
+ * TODO: Implementar funções da store
+ * TODO: Estudar a possibilidade de alterar o node:lts para node:alpine no Dockerfile
+ * TODO: Refatorar as regras do formulário para um arquivo externo
+ */
 }
 </script>
