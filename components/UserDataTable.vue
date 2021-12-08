@@ -113,10 +113,5 @@ export default {
       this.dialogs.delete = true
     }
   }
-  /**
- * TODO: Implementar funções da store
- * TODO: Estudar a possibilidade de alterar o node:lts para node:alpine no Dockerfile
- * TODO: Refatorar as regras do formulário para um arquivo externo
- */
 }
 </script>
