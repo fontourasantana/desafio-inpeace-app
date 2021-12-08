@@ -1,26 +1,17 @@
-FROM node:14-alpine as builder
+FROM node:14-alpine
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm ci \
-  --silent
+RUN npm ci --silent && \
+  npm run build && \
+  rm -rf node_modules && \
+  NODE_ENV=production npm ci --silent --only=production
 
-RUN npm run build
+ENV HOST=0.0.0.0 \
+  NODE_ENV=production
 
-RUN rm -rf node_modules && \
-  NODE_ENV=production npm ci \
-  --silent \
-  --only=production
-
-FROM node:14-alpine
-
-WORKDIR /app
-
-COPY --from=builder /app  .
-
-ENV HOST 0.0.0.0
 EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]
