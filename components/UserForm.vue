@@ -194,6 +194,11 @@ export default {
 
       this.$emit('submit', this.form)
     },
+    async fill (data) {
+      await this.buscarCidades(data.estado)
+      await this.$nextTick()
+      this.form = Object.assign({}, data)
+    },
     reset () {
       this.$refs.form.reset()
     }
