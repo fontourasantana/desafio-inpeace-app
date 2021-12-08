@@ -192,8 +192,7 @@ export default {
         return
       }
 
-      // TODO: Fazer integração com store
-      console.log('valido')
+      this.$emit('submit', this.form)
     },
     reset () {
       this.$refs.form.reset()
