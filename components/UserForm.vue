@@ -100,7 +100,7 @@
         />
       </v-col>
     </v-row>
-    <v-row justify="end">
+    <v-row v-if="showControls" justify="end">
       <v-btn
         :disabled="!formularioValido"
         color="success"
@@ -124,6 +124,12 @@
 <script>
 export default {
   name: 'UserForm',
+  props: {
+    showControls: {
+      type: Boolean,
+      default: true
+    }
+  },
   data: () => ({
     formularioValido: true,
     form: {},
