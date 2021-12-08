@@ -1,9 +1,9 @@
-# Desafio InPeace - Módulo Front-End
+# Desafio InPeace - Módulo App
 
 ### Primeiros passos
 - Primeiro é necessário fazer a cópia do repositório
 ```bash
-git clone https://github.com/fontourasantana/desafio-inpeace-frontend
+git clone https://github.com/fontourasantana/desafio-inpeace-app
 ```
 - Após copiar o repositório é necessário rodar a aplicação da forma que achar mais apropriada
 - Com a aplicação rodando basta acessar a URL [localhost:3000](http://localhost:3000/)
@@ -24,6 +24,6 @@ $ npm run start
 
 ## Rodando aplicação com docker
 ```bash
-docker build . -t desafio-inpeace/frontend
-docker run --name desafio-inpeace-frontend -d -p 3000:3000 desafio-inpeace/frontend:latest
+docker build . -t desafio-inpeace/app
+docker run --name desafio-inpeace-app -d -p 3000:3000 desafio-inpeace/app:latest
 ```
