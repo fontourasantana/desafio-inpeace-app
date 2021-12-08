@@ -59,8 +59,8 @@ export default {
         }
 
         this.processing = true
-        await this.deleteUser(user)
-        this.$toast.success('Usuário removido com sucesso !')
+        const { message } = await this.deleteUser(user)
+        this.$toast.success(message)
         this.$emit('input', false)
       } catch (error) {
         this.$toast.error(error.message)
