@@ -20,7 +20,8 @@
         <v-btn
           color="red"
           outlined
-          @click="$emit('input', false)"
+          :loading="processing"
+          @click="handler(user)"
         >
           Deletar
         </v-btn>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import UserDetails from '@/components/UserDetails'
 
 export default {
@@ -41,6 +43,30 @@ export default {
     user: {
       type: Object,
       required: true
+    }
+  },
+  data: () => ({
+    processing: false
+  }),
+  methods: {
+    ...mapActions('usuario', {
+      deleteUser: 'destroy'
+    }),
+    async handler (user) {
+      try {
+        if (this.processing) {
+          return
+        }
+
+        this.processing = true
+        await this.deleteUser(user)
+        this.$toast.success('Usuário removido com sucesso !')
+        this.$emit('input', false)
+      } catch (error) {
+        this.$toast.error(error.message)
+      } finally {
+        this.processing = false
+      }
     }
   }
 }
