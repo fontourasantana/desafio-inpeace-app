@@ -4,6 +4,8 @@
     :items="users"
     class="elevation-3"
     no-data-text="Nenhum usuário cadastrado no sistema"
+    loading-text="Carregando usuários do sistema"
+    :loading="processing"
   >
     <template #top>
       <v-toolbar
@@ -25,20 +27,20 @@
       <v-icon
         dense
         class="mr-2"
-        @click="showUser(item)"
+        @click="openDetailsDialog(item)"
       >
         mdi-account-search
       </v-icon>
       <v-icon
         dense
         class="mr-2"
-        @click="editUser(item)"
+        @click="openFormDialog(item)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
         dense
-        @click="deleteUser(item)"
+        @click="openDeleteDialog(item)"
       >
         mdi-delete
       </v-icon>
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import UserFormModal from './UserFormModal'
 import UserDeleteModal from './UserDeleteModal'
 import UserDetailsModal from './UserDetailsModal'
@@ -58,6 +61,7 @@ export default {
     UserDeleteModal
   },
   data: () => ({
+    processing: false,
     dialogs: {
       form: false,
       details: false,
@@ -74,42 +78,44 @@ export default {
       { text: 'Email', value: 'email' },
       { text: 'Ações', value: 'actions', sortable: false }
     ],
-    users: [],
-    selectedIndex: -1,
     selectedUser: {}
   }),
+  computed: {
+    ...mapState('usuario', ['users'])
+  },
   created () {
-    this.users = []
-    for (let i = 1; i <= 5; i++) {
-      this.users.push({
-        id: i,
-        nome: `Nome Test${'e'.repeat(i)}`,
-        cpf: `${i}`.repeat(11),
-        dataNascimento: '2021-12-07',
-        email: 'email@teste.br',
-        telefone: '2712345678',
-        estado: 'ES',
-        cidade: 'Vitória',
-        logradouro: 'Rua Vitória'
-      })
-    }
+    this.loadUsers()
   },
   methods: {
-    showUser (item) {
-      this.selectedIndex = this.users.indexOf(item)
-      this.selectedUser = Object.assign({}, item)
+    ...mapActions('usuario', {
+      getAllUsers: 'index'
+    }),
+    async loadUsers () {
+      try {
+        if (this.processing) {
+          return
+        }
+
+        this.processing = true
+        await this.getAllUsers()
+      } catch (error) {
+        this.$toast.error(error.message)
+      } finally {
+        this.processing = false
+      }
+    },
+    openDetailsDialog (user) {
+      this.selectedUser = Object.assign({}, user)
       this.dialogs.details = true
     },
-    editUser (item) {
-      this.selectedIndex = this.users.indexOf(item)
-      this.selectedUser = Object.assign({}, item)
+    openFormDialog (user) {
+      this.selectedUser = Object.assign({}, user)
       this.$refs.form.modeEdition()
       this.$refs.form.fillForm(this.selectedUser)
       this.dialogs.form = true
     },
-    deleteUser (item) {
-      this.selectedIndex = this.users.indexOf(item)
-      this.selectedUser = Object.assign({}, item)
+    openDeleteDialog (user) {
+      this.selectedUser = Object.assign({}, user)
       this.dialogs.delete = true
     }
   }
