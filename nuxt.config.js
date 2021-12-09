@@ -35,7 +35,8 @@ export default {
   plugins: [
     { src: '@/plugins/vue-mask', mode: 'client' },
     { src: '@/plugins/vue-toastification', mode: 'client' },
-    { src: '@/plugins/vue-filters', mode: 'client' }
+    { src: '@/plugins/vue-filters', mode: 'client' },
+    { src: '@/plugins/api-integration', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,7 +57,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.API_BASE_URL || 'http://localhost:8000'
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
