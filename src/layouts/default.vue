@@ -1,10 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar absolute flat app color="transparent">
-      <v-spacer />
-    </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container class="my-8">
         <Nuxt />
       </v-container>
     </v-main>
