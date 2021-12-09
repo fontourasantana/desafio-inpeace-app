@@ -1,15 +1,15 @@
 import { formatarCPF, formatarData, formatarTelefone } from '../formatters'
 
 export const parserUser = ({ cpf, dataNascimento, telefone, ...data }) => ({
-  cpf: formatarCPF(cpf),
-  dataNascimento: formatarData(dataNascimento),
-  telefone: formatarTelefone(telefone),
+  cpf: formatarCPF.toShow(cpf),
+  dataNascimento: formatarData.toShow(dataNascimento),
+  telefone: formatarTelefone.toShow(telefone),
   ...data
 })
 
 export const preparePayload = ({ cpf, dataNascimento, telefone, ...data }) => ({
-  cpf: cpf.replace(/\D/g, ''),
-  dataNascimento: dataNascimento.split('/').reverse().join('-'),
-  telefone: telefone.replace(/\D/g, ''),
+  cpf: formatarCPF.toRequest(cpf),
+  dataNascimento: formatarData.toRequest(dataNascimento),
+  telefone: formatarTelefone.toRequest(telefone),
   ...data
 })

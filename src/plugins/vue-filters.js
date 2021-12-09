@@ -3,7 +3,7 @@ import { formatarCPF, formatarData, formatarTelefone } from '@/utils'
 
 Vue.filter('formatarData', (value) => {
   if (/(\d{4})-(\d{2})-(\d{2})/.test(value)) {
-    return formatarData(value)
+    return formatarData.toShow(value)
   }
 
   return value
@@ -18,7 +18,7 @@ Vue.filter('formatarCPF', (value) => {
     return value
   }
 
-  return formatarCPF(value)
+  return formatarCPF.toShow(value)
 })
 
 Vue.filter('formatarTelefone', (value) => {
@@ -30,5 +30,5 @@ Vue.filter('formatarTelefone', (value) => {
     return value
   }
 
-  return formatarTelefone(value)
+  return formatarTelefone.toShow(value)
 })
