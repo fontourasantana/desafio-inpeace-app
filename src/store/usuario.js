@@ -1,51 +1,36 @@
-import { v4 } from 'uuid'
-
 export const state = () => ({
   users: []
 })
 
 export const getters = {}
 
-function fakeAsync (minMs, maxMs) {
-  const ms = Math.floor(Math.random() * maxMs) + minMs
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+const preparePayload = ({ cpf, dataNascimento, telefone, ...data }) => ({
+  cpf: cpf.replace(/\D/g, ''),
+  dataNascimento: dataNascimento.split('/').reverse().join('-'),
+  telefone: telefone.replace(/\D/g, ''),
+  ...data
+})
 
 export const actions = {
   async index ({ commit }) {
-    await fakeAsync(400, 600)
-    const users = []
-    for (let i = 1; i <= 7; i++) {
-      users.push({
-        id: v4(),
-        nome: `Nome Test${'e'.repeat(i)}`,
-        cpf: `${i}`.repeat(11),
-        dataNascimento: '2021-12-07',
-        email: 'email@teste.br',
-        telefone: '2712345678',
-        estado: 'ES',
-        cidade: 'Vitória',
-        logradouro: 'Rua Vitória'
-      })
-    }
-
-    commit('setUsers', users)
+    const { data } = await this.$api.get('/usuarios')
+    commit('setUsers', data.users)
   },
-  async store ({ state, commit }, payload) {
-    await fakeAsync(400, 600)
-    const user = { ...payload, id: v4() }
-    commit('addUser', user)
-    return { message: 'Usuário registrado com sucesso !' }
+  async store ({ commit }, payload) {
+    const { message, data } = await this.$api.post('/usuarios', preparePayload(payload))
+    commit('addUser', data.user)
+    return { message }
   },
-  async update ({ commit }, user) {
-    await fakeAsync(400, 600)
-    commit('updateUser', user)
-    return { message: 'Usuário atualizado com sucesso !' }
+  async update ({ commit }, { id, ...payload }) {
+    const { message, data } = await this.$api.put(`/usuarios/${id}`, preparePayload(payload))
+    commit('updateUser', data.user)
+    return { message }
   },
   async destroy ({ commit }, user) {
-    await fakeAsync(400, 600)
+    const { id } = user
+    const { message } = await this.$api.delete(`/usuarios/${id}`)
     commit('removeUser', user)
-    return { message: 'Usuário removido com sucesso !' }
+    return { message }
   }
 }
 
