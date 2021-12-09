@@ -1,15 +1,10 @@
+import { preparePayload } from '@/utils'
+
 export const state = () => ({
   users: []
 })
 
 export const getters = {}
-
-const preparePayload = ({ cpf, dataNascimento, telefone, ...data }) => ({
-  cpf: cpf.replace(/\D/g, ''),
-  dataNascimento: dataNascimento.split('/').reverse().join('-'),
-  telefone: telefone.replace(/\D/g, ''),
-  ...data
-})
 
 export const actions = {
   async index ({ commit }) {
