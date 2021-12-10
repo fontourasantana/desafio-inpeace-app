@@ -1,5 +1,7 @@
 FROM node:14-alpine
 
+ENV API_BASE_URL=http://api.localhost
+
 WORKDIR /app
 
 COPY . .
