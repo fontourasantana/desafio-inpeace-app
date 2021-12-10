@@ -1,5 +1,6 @@
 # Desafio InPeace - Módulo App
-
+Este repositório tem como objetivo fornecer uma versão da aplicação com integração da api mockada.\
+O projeto completo pode ser encontrado no repositório [Desafio Inpeace](https://github.com/fontourasantana/desafio-inpeace)
 ## Requisitos
 |Ferramenta|Versão Testada|
 |:-:|:-:|
