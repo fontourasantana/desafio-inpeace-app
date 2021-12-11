@@ -10,7 +10,7 @@ O projeto completo pode ser encontrado no repositório [Desafio Inpeace](https:/
 ### Primeiros passos
 - Primeiro é necessário fazer a cópia do repositório
 ```bash
-git clone https://github.com/fontourasantana/desafio-inpeace-app
+git clone https://github.com/fontourasantana/desafio-inpeace-app && cd desafio-inpeace-app
 ```
 - Após copiar o repositório copie o exemplo do .env fornecido no repositório
 ```bash
@@ -24,6 +24,7 @@ make
 - Com a aplicação rodando basta acessar a URL [localhost:3000](http://localhost:3000/)
 
 ### Executando projeto
+- Comando para execução da aplicação
 ```bash
 make up
 ```
