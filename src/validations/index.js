@@ -1,7 +1,7 @@
 export const user = {
   nome: [
     v => !!v || 'O nome é obrigatório',
-    v => /^[a-z áàãâéèêíìîóòõôúùûç]+$/i.test(v) || 'O nome possui caracters não permitidos',
+    v => /^[a-z áàãâéèêíìîóòõôúùûç.]+$/i.test(v) || 'O nome possui caracters não permitidos',
     v => (v && v.length <= 60) || 'O nome deve ter menos de 60 caracters'
   ],
   cpf: [
